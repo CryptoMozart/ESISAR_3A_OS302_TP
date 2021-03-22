@@ -43,7 +43,7 @@ int main (int argc, char *argv[]){
       signal(SIGUSR2,stop);   //on exécute stop quand on recoit SIGUSR2, donc quand le pere nous "libère"
 
       while(1){
-        pause(); //on attend d'être réveillé par wake_up, donc par le père qui nous envoie un SIGUSR1
+        pause(); //on attend que le père nous envoie un SIGUSR1
        
         int barillet = lire_valeur(argv[1]); //on lit la valeur du barillet dans le fichier passé en argument
        
@@ -62,7 +62,7 @@ int main (int argc, char *argv[]){
   sleep(1);  //pour etre sur que tous les fils sont créés
   for (int i = 1 ; i <= N ; i++){
     kill(fils[i],SIGUSR1); // pour chaque fils on va le réveiller avec le signal SIGUSR1
-    pause(); //on attend d'être réveillé par wake_up, donc soit que le fils nous dise qu'il est toujours vivant, soit qu'un fils est mort
+    pause(); //on attend de recevoir un signal du fils, donc soit que le fils nous dise qu'il est toujours vivant, soit qu'il est mort
   }
   return 0;
 }
